@@ -1,0 +1,20 @@
+{
+  "name": "shoop-books",
+  "version": "1.0.0",
+  "description": "Sistema simples de cadastro e login em um serviço compra de livros",
+  "main": "index.js",
+  "scripts": {
+    "test": "jestTest",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Noctho01/shoop-books.git"
+  },
+  "author": "Vinicius Dos Santos Rodrigues <vinicius.dev01@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Noctho01/shoop-books/issues"
+  },
+  "homepage": "https://github.com/Noctho01/shoop-books#readme"
+}

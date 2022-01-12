@@ -4,16 +4,9 @@ import jwt from 'jsonwebtoken'
 export class UsuariosController {
 
     static async cadastrarUsuario(req, res) {
+        const dadosUsuario = req.body
         try {
-            const dados = {
-                segundo_nome: 'Dos Santos',
-                cpf: '06700122112',
-                data_nascimento: '1999-04-12',
-                numero_telefone: '984518363',
-                email: 'viniciuss@gmail.com',
-                senha: 'minhaSenha'
-            }
-            const resultInsert = await model.Usuario.criarUsuario(dados)
+            const resultInsert = await model.Usuario.criarUsuario(dadosUsuario)
             return res.status(200).json(resultInsert)
         } catch (error) {
             return res.status(500).json(error.message)

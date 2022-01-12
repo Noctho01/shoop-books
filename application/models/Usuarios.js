@@ -2,6 +2,7 @@ import { Model } from 'sequelize'
 
 export function Usuarios(sequelize, DataTypes) {
     class Usuario extends Model {
+        
         static async listaUsuarios() {
             try {                
                 const resultFind = await Usuario.findAll({ attributes: ['id', 'primeiro_nome'] })

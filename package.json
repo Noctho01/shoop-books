@@ -1,6 +1,7 @@
 {
   "name": "shoop-books",
   "version": "1.0.0",
+  "type": "module",
   "description": "Sistema simples de cadastro e login em um serviço compra de livros",
   "main": "index.js",
   "scripts": {

@@ -1,7 +1,7 @@
 import validator from 'validator'
 import { ErrorsService } from '../errors/ErrorsService.js'
 
-export function validatorMiddleware(req, res, next) {
+const validatorMiddleware = (req, res, next) => {
     const dadosUsuario = req.body
     // tratando dados
     dadosUsuario.primeiro_nome = validator.trim(dadosUsuario.primeiro_nome).toUpperCase()
@@ -38,7 +38,7 @@ export function validatorMiddleware(req, res, next) {
         !validator.isLength(dadosUsuario.senha, {min:6, max:20}) ? console.errors.senha = 'Senha deve possuir um valor de 6 a 20 caracteres' : null
 
     if (Object.keys(errors).length > 0) throw new ErrorsService(errors, 402)
-    //return next(req.body.dadosUsuario)
+    return next(req.body.dadosUsuario)
 }
 
 class ValidaCpf {
@@ -76,3 +76,5 @@ class ValidaCpf {
         return ftDigito && scDigito
     }
 }
+
+export default validatorMiddleware

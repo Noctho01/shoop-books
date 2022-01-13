@@ -1,39 +1,29 @@
 import { Model } from 'sequelize'
+import { ErrorsService } from '../errors/ErrorsService.js'
 
 export function Livros(sequelize, DataTypes) {
     class Livro extends Model {
         
         static async listaLivros() {
-            try {
-                const resultFind = await Livro.findAll( {attributes: ['id', 'nome']} )
-                if (!resultFind) throw new Error('Não existe nenhum livro')
-                return resultFind
-            } catch (error) {
-                console.error(error.message)
-                throw new Error('Não foi possivel carregar os livros')
-            }
+            const resultFind = await Livro.findAll( {attributes: ['id', 'nome']} )
+            if (!resultFind) throw new ErrorsService('Não existe nenhum livro', 404)
+            return resultFind
         }
 
         static async buscarLivros(query) {
-            try {
-                const resultFind = await Livro.findAll({attributes: ['id', 'nome'], where: query })
-                if (!resultFind) throw new Error('Livro(s) não encontrado(s)')
-                return resultFind
-            } catch (error) {
-                console.error(error.message)
-                throw new Error('Não foi possivel encontrar este(s) livro(s)')
-            }
+            Object.keys(query).forEach(chave => {
+                if(chave != 'genero' && chave != 'autor' && chave != 'preco' && chave != 'nome') throw new ErrorsService('Parametro de busca invalido', 402)
+            })
+            const resultFind = await Livro.findAll({attributes: ['id', 'nome'], where: query })
+            if (resultFind.length < 1) throw new ErrorsService('Livro(s) não encontrado(s)', 404)
+            return resultFind
         }
 
         static async buscarLivro(id) {
-            try {
-                const resultFind = await Livro.findOne({ where: { id: id } })
-                if (!resultFind) throw new Error('Livro não encontrado')
-                return resultFind
-            } catch (error) {
-                console.error(error.message)
-                throw new Error('Não foi possivel encontrar este livro')
-            }
+            if(isNaN(id)) throw new ErrorsService('Informe um ID valido', 402)
+            const resultFind = await Livro.findOne({ where: { id: id } })
+            if (!resultFind) throw new ErrorsService('Livro não encontrado', 404)
+            return resultFind
         }
 
     }

@@ -1,39 +1,44 @@
 import { model } from '../models/index.js'
+import { ErrorsService } from '../errors/ErrorsService.js'
 import jwt from 'jsonwebtoken'
  
 export class UsuariosController {
 
-    static async cadastrarUsuario(req, res) {
-        const dadosUsuario = req.body
-        const resultInsert = await model.Usuario.criarUsuario(dadosUsuario)
-        return res.status(200).json(resultInsert)
+    static async cadastrarUsuario(req, res, next) {
+        try {
+            const dadosUsuario = req.body
+            const resultInsert = await model.Usuario.criarUsuario(dadosUsuario)
+            return res.status(200).json(resultInsert)
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static loginUsuario(req, res) {
-        // apagar dps
+    static loginUsuario(req, res, next) {
         const payload = { id:1 }
-        // criar token e salvar
         const token = UsuariosController._gerarToken(payload)
         res.status(200).cookie('access-token', 'Bearer ' + token).json({
             message: "Login efetuado com sucesso, voce agora tem permiçao para acessar os nosso serviços"
         })
     }
 
-    static async verUsuarios(req, res) {
-        const resultFind = await model.Usuario.listaUsuarios()
-        return res.status(200).json(resultFind)
+    static async verUsuarios(req, res, next) {
+        try {
+            const resultFind = await model.Usuario.listaUsuarios()
+            return res.status(200).json(resultFind)
+        } catch (error) {
+            next(error)
+        }
     }
 
-    static async verUsuario(req, res) {
-        /*
-        let token = req.cookies['access-token']
-        token = token.split(' ')[1]
-        console.log(token)
-        const id = UsuariosController._validaToken(token).id
-        */
+    static async verUsuario(req, res, next) {
         const { id } = req.params
-        const resultFind = await model.Usuario.algunsDadosUsuario(id)
-        return res.status(200).json(resultFind)
+        try {
+            const resultFind = await model.Usuario.algunsDadosUsuario(id)
+            return res.status(200).json(resultFind)
+        } catch (error) {
+            next(error)
+        }
     }
 
     static _gerarToken(payload) {

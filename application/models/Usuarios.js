@@ -4,43 +4,25 @@ export function Usuarios(sequelize, DataTypes) {
     class Usuario extends Model {
         
         static async listaUsuarios() {
-            try {                
-                const resultFind = await Usuario.findAll({ attributes: ['id', 'primeiro_nome'] })
-                return resultFind
-            } catch (error) {
-                throw new Error('Os usuarios não foram encontrados')
-            }
+            const resultFind = await Usuario.findAll({ attributes: ['id', 'primeiro_nome'] })
+            return resultFind
         }
 
         static async algunsDadosUsuario(id) {
-            try {
-                const resultFind = await Usuario.findOne({attributes: ['primeiro_nome', 'segundo_nome', 'email', 'numero_telefone'] ,where: {id: id}})
-                if(!resultFind) throw new Error('Usuario não encontrado')
-                return resultFind
-            } catch (error) {
-                console.error(error.message)
-                throw new Error('Usuario não encontrado')
-            }
+            const resultFind = await Usuario.findOne({attributes: ['primeiro_nome', 'segundo_nome', 'email', 'numero_telefone'] ,where: {id: id}})
+            if(!resultFind) throw new Error('Usuario não encontrado')
+            return resultFind
         }
 
         static async todosOsDados(id) {
-            try {
-                const resultFind = await Usuario.findOne({ where: { id: id } })
-                if(!resultFind) throw new Error('Usuario não encontrado')
-                return resultFind
-            } catch (error) {
-                return error.message
-            }
+            const resultFind = await Usuario.findOne({ where: { id: id } })
+            if(!resultFind) throw new Error('Usuario não encontrado')
+            return resultFind
         }
 
         static async criarUsuario(dados) {
-            try {
-                const resultInser = await Usuario.create(dados)
-                return resultInser
-            } catch (error) {
-                console.error(error.message)
-                throw new Error('Usuario não foi criado')
-            }
+            const resultInser = await Usuario.create(dados)
+            return resultInser
         }
     }
 

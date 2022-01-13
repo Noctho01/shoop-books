@@ -1,4 +1,5 @@
 import validator from 'validator'
+import { ErrorsService } from '../errors/ErrorsService.js'
 
 export function validatorMiddleware(req, res, next) {
     const dadosUsuario = req.body
@@ -35,10 +36,9 @@ export function validatorMiddleware(req, res, next) {
     // senha
         validator.isEmpty(dadosUsuario.senha) ? errors.senha = 'Campo obrigatorio' : null
         !validator.isLength(dadosUsuario.senha, {min:6, max:20}) ? console.errors.senha = 'Senha deve possuir um valor de 6 a 20 caracteres' : null
-    
-    //if (errors) throw new Error(errors)
-    if (Object.keys(errors).length > 0) return res.status(401).json(errors)
-    return next(req.body.dadosUsuario)
+
+    if (Object.keys(errors).length > 0) throw new ErrorsService(errors, 402)
+    //return next(req.body.dadosUsuario)
 }
 
 class ValidaCpf {
@@ -57,7 +57,6 @@ class ValidaCpf {
                 break
             }
         }
-        console.log(segundoResult, digito)
         return segundoResult == digito
     }
 
@@ -73,9 +72,7 @@ class ValidaCpf {
         const cpfFormatado = ValidaCpf._formatarCpf(cpf)
         if(!cpfFormatado) return false
         const ftDigito = ValidaCpf._validarDigitos(cpfFormatado, 10)
-        console.log(ftDigito)
         const scDigito = ValidaCpf._validarDigitos(cpfFormatado, 11)
-        console.log(scDigito)
         return ftDigito && scDigito
     }
 }

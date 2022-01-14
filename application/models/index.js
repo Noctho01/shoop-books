@@ -12,9 +12,9 @@ const config = {
 }
 
 const sequelize = new Sequelize(config.database, config.username, config.password, {
-  host: config.host,
-  dialect: config.dialect,
-  define: { freezeTableName: true, timestamps: false }
+    host: config.host,
+    dialect: config.dialect,
+    define: { freezeTableName: true, timestamps: false }
 })
 
 export const model = {

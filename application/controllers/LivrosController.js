@@ -8,17 +8,22 @@ export class LivrosController {
         try {
             if (!query) resultFind = await model.Livro.listaLivros()
             else resultFind = await model.Livro.buscarLivros(query)
-            return res.status(200).json(resultFind)
+            return res
+                .status(200)
+                .json(resultFind)
         } catch (error) {
             next(error)
         }
     }
 
+    
     static async buscarLivro(req, res, next) {
-        const { id } = req.params
+        const id = req.params.id
         try {
             const resultFind = await model.Livro.buscarLivro(id)
-            return res.status(200).json(resultFind)
+            return res
+                .status(200)
+                .json(resultFind)
         } catch (error) {
             next(error)
         }

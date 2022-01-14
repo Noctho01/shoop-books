@@ -5,27 +5,32 @@ export function Livros(sequelize, DataTypes) {
     class Livro extends Model {
         
         static async listaLivros() {
-            const resultFind = await Livro.findAll( {attributes: ['id', 'nome']} )
+            const resultFind = await Livro.findAll({ attributes: ['id', 'nome'] })
             if (!resultFind) throw new ErrorsService('Não existe nenhum livro', 404)
             return resultFind
         }
 
+
         static async buscarLivros(query) {
             Object.keys(query).forEach(chave => {
-                if(chave != 'genero' && chave != 'autor' && chave != 'preco' && chave != 'nome') throw new ErrorsService('Parametro de busca invalido', 402)
+                const typeQuerys = ['genero', 'autor', 'preco', 'nome']
+                if (!typeQuerys.find(item => item == chave)) throw new ErrorsService('Parametro de busca invalido', 402)
             })
-            const resultFind = await Livro.findAll({attributes: ['id', 'nome'], where: query })
+            const resultFind = await Livro.findAll({
+                attributes: ['id', 'nome'],
+                where: query 
+            })
             if (resultFind.length < 1) throw new ErrorsService('Livro(s) não encontrado(s)', 404)
             return resultFind
         }
 
+
         static async buscarLivro(id) {
-            if(isNaN(id)) throw new ErrorsService('Informe um ID valido', 402)
+            if (isNaN(id)) throw new ErrorsService('Informe um ID valido', 402)
             const resultFind = await Livro.findOne({ where: { id: id } })
             if (!resultFind) throw new ErrorsService('Livro não encontrado', 404)
             return resultFind
         }
-
     }
     
     Livro.init({

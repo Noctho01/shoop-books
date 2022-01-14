@@ -7,10 +7,10 @@ export default async (req, res, next) => {
         const errors = {}
         !dadosUsuario.email ? errors.email = "Informe seu email para login" : null
         !dadosUsuario.senha ? errors.senha = "Informe sua senha para login" : null
-        if(Object.keys(errors).length > 0) throw new ErrorsService(errors, 402)
+        if (Object.keys(errors).length > 0) throw new ErrorsService(errors, 402)
 
         const result = await verificarDados(dadosUsuario)
-        if(Object.keys(result). length > 0) throw new ErrorsService(result, 402)
+        if (Object.keys(result). length > 0) throw new ErrorsService(result, 402)
         req.body = dadosUsuario.email
         next()
     } catch (error) {

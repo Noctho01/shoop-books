@@ -17,9 +17,16 @@ export function Usuarios(sequelize, DataTypes) {
             return resultFind
         }
 
-        static async todosOsDados(id) {
-            Usuario._verificarId(id)
-            const resultFind = await Usuario.findOne({ where: { id: parseInt(id) } })
+        static async todosOsDados(objId) {
+            let parametroDeBusca
+            console.log(objId)
+            if (Object.keys(objId)[0] == 'id') {
+                parametroDeBusca = {id: parseInt(objId)}
+                Usuario._verificarId(parametroDeBusca.id)
+            } else {
+                parametroDeBusca = {email: objId}
+            }
+            const resultFind = await Usuario.findOne({ where: parametroDeBusca })
             if(!resultFind) throw new ErrorsService('id incorreto, este id não existe em nosso banco de dados', 402)
             return resultFind
         }

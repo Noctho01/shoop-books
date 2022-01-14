@@ -1,7 +1,7 @@
 import validator from 'validator'
 import { ErrorsService } from '../errors/ErrorsService.js'
 
-const validatorMiddleware = (req, res, next) => {
+export default (req, res, next) => {
     const dadosUsuario = req.body
     // tratando dados
     dadosUsuario.primeiro_nome = validator.trim(dadosUsuario.primeiro_nome).toUpperCase()
@@ -76,5 +76,3 @@ class ValidaCpf {
         return ftDigito && scDigito
     }
 }
-
-export default validatorMiddleware

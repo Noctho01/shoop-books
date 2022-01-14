@@ -4,13 +4,11 @@ import { ErrorsService } from '../errors/ErrorsService.js'
 export function Usuarios(sequelize, DataTypes) {
     class Usuario extends Model {
         
-
         static async listaUsuarios() {
             const resultFind = await Usuario.findAll({ attributes: ['id', 'primeiro_nome'] })
             if (!resultFind) throw new ErrorsService('Lista de usuarios indisponivel', 404)
             return resultFind
         }
-
 
         static async algunsDadosUsuario(id) {
             Usuario._verificarId(id)
@@ -21,7 +19,6 @@ export function Usuarios(sequelize, DataTypes) {
             if (!resultFind) throw new ErrorsService('Usuario não encontrado', 404)
             return resultFind
         }
-
 
         static async todosOsDados(objId) {
             let parametroDeBusca
@@ -36,7 +33,6 @@ export function Usuarios(sequelize, DataTypes) {
             return resultFind
         }
 
-
         static async criarUsuario(dados) {
             const resultFind = await Usuario.findAll()
             const errors = {}
@@ -48,12 +44,10 @@ export function Usuarios(sequelize, DataTypes) {
             return resultInser
         }
 
-
         static _verificarId(id) {
             if(isNaN(id)) throw new ErrorsService('Informe um ID valido', 402)
         }
     }
-
 
     Usuario.init({
         primeiro_nome: {

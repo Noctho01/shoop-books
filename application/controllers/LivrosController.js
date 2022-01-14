@@ -15,7 +15,6 @@ export class LivrosController {
             next(error)
         }
     }
-
     
     static async buscarLivro(req, res, next) {
         const id = req.params.id

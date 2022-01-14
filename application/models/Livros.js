@@ -10,7 +10,6 @@ export function Livros(sequelize, DataTypes) {
             return resultFind
         }
 
-
         static async buscarLivros(query) {
             Object.keys(query).forEach(chave => {
                 const typeQuerys = ['genero', 'autor', 'preco', 'nome']
@@ -23,7 +22,6 @@ export function Livros(sequelize, DataTypes) {
             if (resultFind.length < 1) throw new ErrorsService('Livro(s) não encontrado(s)', 404)
             return resultFind
         }
-
 
         static async buscarLivro(id) {
             if (isNaN(id)) throw new ErrorsService('Informe um ID valido', 402)

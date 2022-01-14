@@ -15,7 +15,6 @@ export class UsuariosController {
         }
     }
 
-
     static loginUsuario(req, res) {
         const payload = { email: req.body }
         const token = gerarToken(payload)
@@ -24,7 +23,6 @@ export class UsuariosController {
             .cookie('access-token', 'Bearer ' + token)
             .json({ message: "Login efetuado com sucesso, voce agora tem permiçao para acessar os nosso serviços" })
     }
-
 
     static logoutUsuario(req, res) {
         if (!req.cookies['access-token']) return res
@@ -36,7 +34,6 @@ export class UsuariosController {
             .json({ message: "Usuario foi desconectado" })
     }
 
-
     static async verUsuarios(req, res, next) {
         try {
             const resultFind = await model.Usuario.listaUsuarios()
@@ -47,7 +44,6 @@ export class UsuariosController {
             next(error)
         }
     }
-
 
     static async verUsuario(req, res, next) {
         const id = req.params.id
@@ -64,7 +60,6 @@ export class UsuariosController {
         }
     }
 }
-
 
 function gerarToken(payload) {
     return jwt.sign(payload, process.env.SECRET, { expiresIn: "5h" })

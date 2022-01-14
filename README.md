@@ -28,7 +28,7 @@ Infra
 
 ## Tabelas
 ### Usuarios
-![Usuarios](./imgs/tabela_usuario.png)
+![Usuarios](./imgs/tabela_usuarios.png)
 
 ### Livros
 ![Livros](./imgs/tabela_livros.png)

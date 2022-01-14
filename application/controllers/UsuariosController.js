@@ -26,10 +26,10 @@ export class UsuariosController {
 
     static logoutUsuario(req, res) {
         if (!req.cookies['access-token']) return res
-            .status(401)
+            .status(202)
             .json({ message: "Voce já está desconectado" })
         return res
-            .status(200)
+            .status(202)
             .clearCookie('access-token')
             .json({ message: "Usuario foi desconectado" })
     }

@@ -1,5 +1,6 @@
 import { ErrorsService } from "../errors/ErrorsService.js"
 import { model } from '../models/index.js'
+import { createHmac  } from 'crypto'
 
 export default async (req, res, next) => {
     try {
@@ -8,6 +9,10 @@ export default async (req, res, next) => {
         !dadosUsuario.email ? errors.email = "Informe seu email para login" : null
         !dadosUsuario.senha ? errors.senha = "Informe sua senha para login" : null
         if (Object.keys(errors).length > 0) throw new ErrorsService(errors, 402)
+
+        dadosUsuario.senha = createHmac('sha256', process.env.SECRET)
+            .update(dadosUsuario.senha)
+            .digest('hex')
 
         const result = await verificarDados(dadosUsuario)
         if (Object.keys(result). length > 0) throw new ErrorsService(result, 402)

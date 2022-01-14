@@ -5,7 +5,7 @@ export class UsuariosController {
 
     static async cadastrarUsuario(req, res, next) {
         try {
-            const dadosUsuario = req.body
+            const dadosUsuario = req.user
             const resultInsert = await model.Usuario.criarUsuario(dadosUsuario)
             return res
                 .status(201)
